@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-const postSchema = new Schema({
-    username: {
-        type: String,
+const postSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', // refers to the User model
         required: true
     },
     description: {
@@ -30,7 +31,7 @@ const postSchema = new Schema({
         type: Date,
         default: Date.now
     }
-})
+});
 
 
 // Username

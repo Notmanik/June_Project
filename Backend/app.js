@@ -3,22 +3,16 @@ import mongoose from 'mongoose';
 import 'dotenv/config' // Load environment variables from .env file
 const app = express();
 import connectDB from './config/Database.js';
-import registerUser from './routes/auth/register.js';
-import loginUser from './routes/auth/login.js';
-import verifyToken from './config/auth.js';
+import authRoutes from './routes/authRoutes.js';
+import postRoutes from './routes/postRoutes.js';
 // connoect to Mongo DB
 connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// register Route
-app.post('/api/register', registerUser);
-// login Route
-app.post('/api/login', loginUser);
-// Protected Route Example
-app.get('/api/protected', verifyToken, (req, res) => {
-  res.status(200).json({ message: "This is a protected route", user: req.user });
-});
+
+app.use("/api/auth", authRoutes);
+app.use("/api", postRoutes);
 
 // listening to the server
 const port = 5000;
