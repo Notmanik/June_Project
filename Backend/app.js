@@ -1,7 +1,8 @@
 import express from 'express';
-import mongoose from 'mongoose';
-import 'dotenv/config' // Load environment variables from .env file
+import cors from 'cors';
+import 'dotenv/config' 
 const app = express();
+app.use(cors()); 
 import connectDB from './config/Database.js';
 import authRoutes from './routes/authRoutes.js';
 import postRoutes from './routes/postRoutes.js';
