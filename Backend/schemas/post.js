@@ -12,8 +12,9 @@ const postSchema = new mongoose.Schema({
         required: true
     },
     media: {
-        type: String,
-        required: true
+        filename: String,
+        path: String,
+        mimetype: String,
     },
     likes: {
         type: Number,

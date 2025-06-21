@@ -7,7 +7,7 @@ const PostCard = ({ post }) => {
       {post.media && (
         <div className="h-48 overflow-hidden">
           <img 
-            src={post.media} 
+            src={`http://localhost:5000/uploads/${post.media.filename}`} 
             alt="Post media" 
             className="w-full h-full object-cover"
           />
