@@ -27,7 +27,7 @@
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/june_project.git
+https://github.com/Notmanik/June_Project.git
 cd june_project
 ```
 
