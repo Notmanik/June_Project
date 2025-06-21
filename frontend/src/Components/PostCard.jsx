@@ -1,11 +1,43 @@
-// src/components/PostCard.jsx
+// src/Components/PostCard.jsx
+import { useState } from 'react';
 
 const PostCard = ({ post }) => {
+  const [isLiked, setIsLiked] = useState(false);
+  const [isDisliked, setIsDisliked] = useState(false);
+  const [likes, setLikes] = useState(post.likes || 0);
+  const [dislikes, setDislikes] = useState(post.dislikes || 0);
+
+  const handleLike = () => {
+    if (isLiked) {
+      setLikes(likes - 1);
+    } else {
+      setLikes(likes + 1);
+      if (isDisliked) {
+        setDislikes(dislikes - 1);
+        setIsDisliked(false);
+      }
+    }
+    setIsLiked(!isLiked);
+  };
+
+  const handleDislike = () => {
+    if (isDisliked) {
+      setDislikes(dislikes - 1);
+    } else {
+      setDislikes(dislikes + 1);
+      if (isLiked) {
+        setLikes(likes - 1);
+        setIsLiked(false);
+      }
+    }
+    setIsDisliked(!isDisliked);
+  };
+
   return (
-    <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl mb-6 transition-all hover:shadow-lg">
+    <div className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1">
       {/* Media section */}
       {post.media && (
-        <div className="h-48 overflow-hidden">
+        <div className="h-60 overflow-hidden">
           <img 
             src={`http://localhost:5000/uploads/${post.media.filename}`} 
             alt="Post media" 
@@ -15,19 +47,19 @@ const PostCard = ({ post }) => {
       )}
       
       {/* Content section */}
-      <div className="p-6">
+      <div className="p-5">
         {/* Description */}
-        <h2 className="text-xl font-semibold text-gray-800 mb-2 line-clamp-2">
+        <p className="text-gray-700 mb-4 line-clamp-3">
           {post.description}
-        </h2>
+        </p>
         
         {/* Tags */}
         {post.tags?.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-3">
+          <div className="flex flex-wrap gap-2 mb-4">
             {post.tags.map((tag, index) => (
               <span 
                 key={index}
-                className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700"
+                className="inline-block bg-indigo-50 text-indigo-700 rounded-full px-3 py-1 text-xs font-medium"
               >
                 #{tag}
               </span>
@@ -35,40 +67,79 @@ const PostCard = ({ post }) => {
           </div>
         )}
         
-        {/* User info */}
-        <div className="flex items-center mb-4">
-          <div className="bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center mr-2">
-            <span className="text-gray-600 text-sm">
-              {post.user?.username?.charAt(0).toUpperCase() || '?'}
-            </span>
+        {/* User info and timestamp */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center">
+            <div className="bg-indigo-100 rounded-full w-8 h-8 flex items-center justify-center mr-2">
+              <span className="text-indigo-700 font-medium">
+                {post.user?.username?.charAt(0).toUpperCase() || 'U'}
+              </span>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-gray-900">
+                {post.user?.username || "Unknown user"}
+              </p>
+              <p className="text-xs text-gray-500">
+                {new Date(post.timestamp).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                  year: 'numeric'
+                })}
+              </p>
+            </div>
           </div>
-          <p className="text-gray-600">
-            {post.user?.username || "Unknown user"}
-          </p>
+          
+          <div className="text-xs text-gray-500">
+            {new Date(post.timestamp).toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit'
+            })}
+          </div>
         </div>
         
-        {/* Stats and timestamp */}
-        <div className="flex justify-between items-center text-sm text-gray-500 border-t pt-3">
+        {/* Stats */}
+        <div className="flex justify-between items-center border-t border-gray-100 pt-3">
           <div className="flex space-x-4">
-            <span className="flex items-center">
-              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
-              </svg>
-              {post.likes}
-            </span>
-            <span className="flex items-center">
-              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018c.163 0 .326.02.485.06L17 4m0 0v9m0-9h2.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 13H9m7-9V4M9 13h6" />
-              </svg>
-              {post.dislikes}
-            </span>
+            <button 
+              onClick={handleLike}
+              className={`flex items-center text-sm ${
+                isLiked ? 'text-indigo-600' : 'text-gray-500 hover:text-indigo-600'
+              }`}
+            >
+              <svg 
+  className={`w-5 h-5 mr-1 ${isLiked ? 'fill-current text-orange-500' : 'fill-gray-400'}`} 
+  viewBox="0 0 24 24"
+>
+  <path d="M12 4l8 8h-6v8h-4v-8H4l8-8z"/>
+</svg>
+              {likes}
+            </button>
+            
+            <button 
+              onClick={handleDislike}
+              className={`flex items-center text-sm ${
+                isDisliked ? 'text-indigo-600' : 'text-gray-500 hover:text-indigo-600'
+              }`}
+            >
+              <svg 
+  className={`w-5 h-5 mr-1 ${isDisliked ? 'fill-current text-blue-500' : 'fill-gray-400'}`} 
+  viewBox="0 0 24 24"
+>
+  <path d="M12 20l-8-8h6V4h4v8h6l-8 8z"/>
+</svg>
+              {dislikes}
+            </button>
           </div>
-          <span>
-            {new Date(post.timestamp).toLocaleString()}
-          </span>
+          
+          <button className="text-gray-500 hover:text-indigo-600">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+          </button>
         </div>
       </div>
     </div>
   );
 };
+
 export default PostCard;
