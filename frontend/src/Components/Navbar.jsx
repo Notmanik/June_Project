@@ -42,10 +42,10 @@ const Navbar = () => {
             <div className="flex-shrink-0 flex items-center">
               <div className="bg-white rounded-lg p-1">
                 <div className="bg-gradient-to-r from-indigo-400 to-purple-500 w-8 h-8 rounded flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">S</span>
+                  <span className="text-white font-bold text-lg">V</span>
                 </div>
               </div>
-              <span className="ml-3 text-white text-xl font-bold">SocialWave</span>
+              <span className="ml-3 text-white text-xl font-bold">Vistara</span>
             </div>
           </div>
 
@@ -118,10 +118,10 @@ const Navbar = () => {
             <div className="flex-shrink-0 flex items-center">
               <div className="bg-white rounded-lg p-1">
                 <div className="bg-gradient-to-r from-indigo-400 to-purple-500 w-8 h-8 rounded flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">S</span>
+                  <span className="text-white font-bold text-lg">V</span>
                 </div>
               </div>
-              <span className="ml-3 text-white text-xl font-bold">SocialWave</span>
+              <span className="ml-3 text-white text-xl font-bold">Vistara</span>
             </div>
           </div>
           

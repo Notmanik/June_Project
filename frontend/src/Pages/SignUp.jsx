@@ -164,7 +164,7 @@ const SignUp = () => {
                 <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl transition-all hover:shadow-2xl">
                     <div className="text-center mb-8">
                         <h1 className="text-3xl font-bold text-indigo-700 mb-2">Create Your Account</h1>
-                        <p className="text-gray-500">Join our community today</p>
+                        <p className="text-gray-500">Join Vistara today</p>
                     </div>
 
                     {message && (

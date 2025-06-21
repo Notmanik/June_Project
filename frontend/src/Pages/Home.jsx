@@ -111,10 +111,10 @@ const Home = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-indigo-800 mb-3">
-            Welcome to SocialWave
+            Welcome to Vistara
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Discover amazing content from our community. Share your moments, connect with others, and be inspired.
+            Create, share, and explore. Vistara is your space to post moments, upload media, and stay connected.
           </p>
         </div>
         
