@@ -30,7 +30,10 @@ const createNewPost = async (req, res) => {
           message: "Description and media are required",
         });
     }
-
+    const tagsArray = tags
+      .split(',')
+      .map((tag) => tag.trim())
+      .filter((tag) => tag.length > 0); 
     const newPost = new Post({
       description,
       media: {
@@ -38,7 +41,7 @@ const createNewPost = async (req, res) => {
         path: media.path,
         mimetype: media.mimetype,
       },
-      tags,
+      tags: tagsArray,
       user: userId,
     });
 
@@ -99,4 +102,5 @@ const deletePost = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-export { getAllPosts, createNewPost, editPost, deletePost };
+
+export { getAllPosts, createNewPost, editPost, deletePost};

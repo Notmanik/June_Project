@@ -2,69 +2,8 @@
 import { useEffect, useState } from "react";
 import PostCard from "../Components/PostCard";
 import Navbar from "../Components/Navbar";
-
+import { Link } from "react-router-dom";
 // Simulate API call with mock data
-const mockPosts = [
-  {
-    _id: "1",
-    description: "Just visited the most amazing place! The mountains were breathtaking and the air was so fresh. Definitely coming back next year!",
-    media: { filename: "mountain.jpg" },
-    tags: ["travel", "nature", "adventure"],
-    user: { username: "traveler_john" },
-    likes: 24,
-    dislikes: 2,
-    timestamp: "2023-05-15T14:30:00Z"
-  },
-  {
-    _id: "2",
-    description: "My new coffee setup is finally complete! The aroma in the morning is just perfect to start the day.",
-    media: { filename: "coffee.jpg" },
-    tags: ["coffee", "morning", "lifestyle"],
-    user: { username: "coffee_lover" },
-    likes: 42,
-    dislikes: 1,
-    timestamp: "2023-05-14T09:15:00Z"
-  },
-  {
-    _id: "3",
-    description: "Just finished my morning run along the beach. There's nothing like starting the day with ocean views and salty air!",
-    tags: ["fitness", "health", "beach"],
-    user: { username: "fitness_guru" },
-    likes: 18,
-    dislikes: 0,
-    timestamp: "2023-05-16T07:45:00Z"
-  },
-  {
-    _id: "4",
-    description: "Experimenting with new recipes in the kitchen today. This vegan lasagna turned out amazing! Who says vegan food can't be delicious?",
-    media: { filename: "lasagna.jpg" },
-    tags: ["cooking", "vegan", "food"],
-    user: { username: "vegan_chef" },
-    likes: 56,
-    dislikes: 3,
-    timestamp: "2023-05-15T18:20:00Z"
-  },
-  {
-    _id: "5",
-    description: "My workspace setup for maximum productivity. Dual monitors, mechanical keyboard, and just the right amount of plants!",
-    media: { filename: "workspace.jpg" },
-    tags: ["work", "productivity", "setup"],
-    user: { username: "digital_nomad" },
-    likes: 87,
-    dislikes: 2,
-    timestamp: "2023-05-14T12:10:00Z"
-  },
-  {
-    _id: "6",
-    description: "Sunset views from my balcony tonight. Sometimes you don't need to travel far to find beauty in the world.",
-    media: { filename: "sunset.jpg" },
-    tags: ["sunset", "nature", "photography"],
-    user: { username: "urban_explorer" },
-    likes: 65,
-    dislikes: 1,
-    timestamp: "2023-05-16T19:30:00Z"
-  },
-];
 
 const getAllPosts = async () => {
   try {
@@ -78,9 +17,6 @@ const getAllPosts = async () => {
     }
     const data = await response.json();
     return data.posts;
-    
-    // For demo purposes, return mock data
-    // return mockPosts;
   } catch (error) {
     console.error("Network error:", error);
     return [];

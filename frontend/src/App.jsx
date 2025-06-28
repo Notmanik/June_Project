@@ -5,9 +5,8 @@ import Home from "./Pages/Home.jsx";
 import SignUp from "./Pages/SignUp.jsx";
 import LogIn from "./Pages/LogIn.jsx";
 import CreatePost from "./Pages/CreatePost.jsx";
+import Profile from "./Pages/Profile.jsx";
 function App() {
-  
-
   return (
     <BrowserRouter>
       <Routes>
@@ -16,6 +15,7 @@ function App() {
         <Route path="/login" element={<LogIn />} />
         <Route path="/home" element={<Home />} />
         <Route path="/home/createpost" element={<CreatePost/>} />
+        <Route path="/home/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   )

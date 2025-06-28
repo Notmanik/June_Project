@@ -141,5 +141,16 @@ const deleteUserAccount = async (req, res) => {
         res.status(500).json({ message: 'Server error during deletion' });
     }
 };
-
-export { getUserProfile, updateUserProfile, deleteUserAccount };
+const getPostByUser = async (req , res) => {
+  try{
+    const userId = req.user.id;
+    const posts = await Post.find({ user: userId }).populate("user", "username profilePicture");
+    if (!posts || posts.length === 0) {
+      return res.status(404).json({ success: false, message: "No posts found for this user" });
+    }
+    res.status(200).json({ success: true, posts });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+}
+export { getUserProfile, updateUserProfile, deleteUserAccount, getPostByUser };

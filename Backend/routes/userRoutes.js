@@ -3,6 +3,7 @@ import {
   getUserProfile,
   updateUserProfile,
   deleteUserAccount,
+  getPostByUser,
 } from "../controllers/userControllers.js";
 import verifyToken from "../middlewares/jwtVerifyToken.js";
 import { body, validationResult } from "express-validator";
@@ -29,4 +30,5 @@ router.put(
 );
 // Route to delete user account
 router.delete("/profile", verifyToken, deleteUserAccount);
+router.get("/posts", verifyToken, getPostByUser);
 export default router;
