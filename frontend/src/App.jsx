@@ -6,6 +6,8 @@ import SignUp from "./Pages/SignUp.jsx";
 import LogIn from "./Pages/LogIn.jsx";
 import CreatePost from "./Pages/CreatePost.jsx";
 import Profile from "./Pages/Profile.jsx";
+import EditProfile from "./Pages/EditProfile.jsx";
+import HelpPage from "./Pages/HelpPage.jsx";
 function App() {
   return (
     <BrowserRouter>
@@ -16,6 +18,8 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/home/createpost" element={<CreatePost/>} />
         <Route path="/home/profile" element={<Profile />} />
+        <Route path="/home/profile/edit" element={<EditProfile />} />
+        <Route path="/home/help" element={<HelpPage/>}></Route>
       </Routes>
     </BrowserRouter>
   )

@@ -21,15 +21,15 @@ const updateUserProfile = async (req, res) => {
             firstName,
             lastName,
             age,
-            profilePic,
             bio,
             mobileNumber,
             interests
         } = req.body;
+        const profilePic = req.file;
 
-        // Find the user
-        const user = await User.findById(req.userId);
-        if (!user) {
+        const userId = req.user?.id; // safe access
+
+        if (!userId) {
             return res.status(404).json({
                 success: false,
                 message: 'User not found'
@@ -38,18 +38,25 @@ const updateUserProfile = async (req, res) => {
 
         // Prepare update object
         const updateData = {};
-
+        
         if (firstName) updateData.firstName = firstName;
         if (lastName) updateData.lastName = lastName;
-        if (age) updateData.age = age;
-        if (profilePic) updateData.profilePic = profilePic;
-        if (bio !== undefined) updateData.bio = bio; // Allow empty string
+        if (typeof age !== 'undefined') updateData.age = age;
+        if (typeof bio !== 'undefined') updateData.bio = bio;
 
-        // Ensure mobile number is not already in use by another user
+        if (profilePic) {
+  updateData.profilePic = {
+    filename: profilePic.filename,
+    path: `uploads/profile-image/${profilePic.filename}`,
+    mimetype: profilePic.mimetype
+  };
+}
+
+
         if (mobileNumber) {
             const existingUser = await User.findOne({
                 mobileNumber,
-                _id: { $ne: req.userId } // exclude current user
+                _id: { $ne: userId } // exclude current user
             });
             if (existingUser) {
                 return res.status(400).json({
@@ -60,19 +67,19 @@ const updateUserProfile = async (req, res) => {
             updateData.mobileNumber = mobileNumber;
         }
 
-        // ✅ What this line does:
-        if (interests && Array.isArray(interests)) {
-            updateData.interests = interests;
+        if (interests) {
+            const interestArray = interests
+                .split(',')
+                .map(tag => tag.trim())
+                .filter(tag => tag.length > 0);
+            if (interestArray.length > 0) {
+                updateData.interests = interestArray;
+            }
         }
 
-        // ➤ It checks:
-        // - if interests field is provided in request
-        // - AND it’s an array (e.g., ["coding", "reading"])
-        // Then updates the interests field.
-
-        // Update the user in DB
+        // Update user in DB
         const updatedUser = await User.findByIdAndUpdate(
-            req.userId,
+            userId,
             updateData,
             {
                 new: true,
@@ -89,9 +96,7 @@ const updateUserProfile = async (req, res) => {
     } catch (error) {
         console.error('Update profile error:', error);
 
-        // 🔍 Catch Block Explanation:
-
-        // If validation fails (e.g., age = -1), Mongoose throws a ValidationError
+        // Validation error (e.g. negative age)
         if (error.name === 'ValidationError') {
             const errors = Object.values(error.errors).map(err => err.message);
             return res.status(400).json({
@@ -101,7 +106,7 @@ const updateUserProfile = async (req, res) => {
             });
         }
 
-        // If a unique field (like mobileNumber or email) already exists
+        // Duplicate key error (e.g., mobile number)
         if (error.code === 11000) {
             const field = Object.keys(error.keyPattern)[0];
             return res.status(400).json({
@@ -110,13 +115,14 @@ const updateUserProfile = async (req, res) => {
             });
         }
 
-        // Fallback for any other error
+        // Generic fallback
         res.status(500).json({
             success: false,
             message: 'Server error while updating profile'
         });
     }
 };
+
 
 // DELETE /profile - Delete user account
 const deleteUserAccount = async (req, res) => {

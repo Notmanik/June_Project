@@ -1,4 +1,5 @@
 import express from "express";
+import mutler from "../middlewares/mutler.js";
 import {
   getUserProfile,
   updateUserProfile,
@@ -13,19 +14,8 @@ const router = express.Router();
 router.get("/profile", verifyToken, getUserProfile);
 // Route to update user profile
 router.put(
-  "/profile",
-  verifyToken,
-  [
-    body("age").isInt({ min: 13 }).withMessage("Age must be at least 13"),
-    body("firstName")
-      .isLength({ min: 2 })
-      .withMessage("First name is required"),
-    body("lastName").isLength({ min: 2 }).withMessage("Last name is required"),
-    body("bio")
-      .optional()
-      .isLength({ max: 200 })
-      .withMessage("Bio must be less than 200 characters"),
-  ],
+  "/profile/edit",
+  verifyToken, mutler('profilePic','uploads/profile-image/'),
   updateUserProfile
 );
 // Route to delete user account

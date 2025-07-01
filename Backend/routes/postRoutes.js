@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 router.get('/posts', getAllPosts);
-router.post('/newpost',verifyToken, mutler('file') ,createNewPost );
+router.post('/newpost',verifyToken, mutler('postImage','uploads/post-images/') ,createNewPost );
 router.put('/editpost/:id',verifyToken, editPost);
 router.delete('/deletepost/:id',verifyToken ,deletePost);
 export default router;

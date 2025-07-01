@@ -1,17 +1,9 @@
 // middleware/mutler.js
 import multer from 'multer';
 import path from 'path';
+import fs from 'fs';
 
-// storage with timestamp + extension
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads/'),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, Date.now() + '-' + file.fieldname + ext);
-  },
-});
-
-// optional: file type filter
+// file type filter
 const fileFilter = (req, file, cb) => {
   const allowed = ['.jpg', '.jpeg', '.png', '.webp'];
   const ext = path.extname(file.originalname).toLowerCase();
@@ -21,10 +13,23 @@ const fileFilter = (req, file, cb) => {
   cb(null, true);
 };
 
-const upload = multer({ storage, fileFilter });
+// middleware factory function
+const mutler = (fieldName = 'file', folder = 'uploads/') => {
+  // Ensure folder exists
+  if (!fs.existsSync(folder)) {
+    fs.mkdirSync(folder, { recursive: true });
+  }
 
-// custom middleware factory
-const mutler = (fieldName = 'file') => {
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, folder),
+    filename: (req, file, cb) => {
+      const ext = path.extname(file.originalname);
+      cb(null, Date.now() + '-' + file.fieldname + ext);
+    },
+  });
+
+  const upload = multer({ storage, fileFilter });
+
   return (req, res, next) => {
     upload.single(fieldName)(req, res, (err) => {
       if (err) {
@@ -40,5 +45,4 @@ const mutler = (fieldName = 'file') => {
 };
 
 export default mutler;
-export { upload, mutler };
- // Export both the upload instance and the middleware
+export { mutler };

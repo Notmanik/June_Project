@@ -90,7 +90,7 @@ const Profile = () => {
   useEffect(() => { 
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         if (!token) {
           setError("No token found. Please log in.");
           setLoading(false);
@@ -123,7 +123,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         if (!token) {
           setPostError("No token found. Please log in.");
           setPostLoading(false);
@@ -207,7 +207,7 @@ const Profile = () => {
                   </div>
                 ) : (
                   <img 
-                    src={userData.profilePic} 
+                    src={`http://localhost:5000/uploads/profile-image/${userData.profilePic.filename}`} 
                     alt={`${userData.firstName}'s profile`} 
                     className="rounded-full w-full h-full object-cover"
                   />

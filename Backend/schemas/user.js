@@ -20,8 +20,9 @@ const userSchema = new Schema({
         required: true
     },
     profilePic: {
-        type: String,
-        default: 'default_profile_pic.png'
+        filename: String,
+        path: String,
+        mimetype: String,
     },
     bio: {
         type: String,

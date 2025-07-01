@@ -1,6 +1,6 @@
 import axios from "axios"
 const getPostByUser = async() => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     if (!token) {
         throw new Error("No token found. Please log in.");
     }

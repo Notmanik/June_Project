@@ -51,7 +51,7 @@ const LogIn = () => {
       const data = await response.json();
       if (response.ok) {
         setMessage("Login successful");
-        localStorage.setItem("token", data.token);
+        sessionStorage.setItem("token", data.token);
         navigate("/home");
       } else {
         setMessage(data.message || "Login failed");

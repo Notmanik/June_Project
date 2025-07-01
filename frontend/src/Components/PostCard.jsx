@@ -1,12 +1,15 @@
 // src/Components/PostCard.jsx
-import { useState } from 'react';
-
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import getUserProfile from "../Api/getUserProfile";
+import { useEffect } from "react";
 const PostCard = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
   const [likes, setLikes] = useState(post.likes || 0);
   const [dislikes, setDislikes] = useState(post.dislikes || 0);
-
+  const [profilePic, setProfilePic] = useState("");
+  const [username, setUsername] = useState("");
   const handleLike = () => {
     if (isLiked) {
       setLikes(likes - 1);
@@ -32,32 +35,43 @@ const PostCard = ({ post }) => {
     }
     setIsDisliked(!isDisliked);
   };
-
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const data = await getUserProfile();
+        if (data?.profilePic?.filename) {
+          setProfilePic(`http://localhost:5000/${data.profilePic.path}`);
+        }
+        setUsername(data.username || ""); // Or use a state like setUsername(data.username)
+      } catch (err) {
+        console.error("Error fetching user profile:", err.message);
+      }
+    };
+    fetchProfile();
+  }, [location.pathname]);
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1">
       {/* Media section */}
       {post.media && (
         <div className="h-60 overflow-hidden">
-          <img 
-            src={`http://localhost:5000/uploads/${post.media.filename}`} 
-            alt="Post media" 
+          <img
+            src={`http://localhost:5000/uploads/${post.media.filename}`}
+            alt="Post media"
             className="w-full h-full object-cover"
           />
         </div>
       )}
-      
+
       {/* Content section */}
       <div className="p-5">
         {/* Description */}
-        <p className="text-gray-700 mb-4 line-clamp-3">
-          {post.description}
-        </p>
-        
+        <p className="text-gray-700 mb-4 line-clamp-3">{post.description}</p>
+
         {/* Tags */}
         {post.tags?.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-4">
             {post.tags.map((tag, index) => (
-              <span 
+              <span
                 key={index}
                 className="inline-block bg-indigo-50 text-indigo-700 rounded-full px-3 py-1 text-xs font-medium"
               >
@@ -66,74 +80,101 @@ const PostCard = ({ post }) => {
             ))}
           </div>
         )}
-        
+
         {/* User info and timestamp */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center">
-            <div className="bg-indigo-100 rounded-full w-8 h-8 flex items-center justify-center mr-2">
-              <span className="text-indigo-700 font-medium">
-                {post.user?.username?.charAt(0).toUpperCase() || 'U'}
-              </span>
+            <div className="w-10 h-10 rounded-full flex items-center justify-center bg-indigo-100 mr-2 shadow-md border-2 border-white transition-transform duration-200 hover:scale-105">
+              {profilePic ? (
+                <img
+                  src={profilePic}
+                  alt="Profile"
+                  className="w-full h-full rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 text-white font-bold text-lg">
+                  {username?.charAt(0).toUpperCase() || "U"}
+                </div>
+              )}
             </div>
+
             <div>
               <p className="text-sm font-medium text-gray-900">
                 {post.user?.username || "Unknown user"}
               </p>
               <p className="text-xs text-gray-500">
-                {new Date(post.timestamp).toLocaleDateString('en-US', {
-                  month: 'short',
-                  day: 'numeric',
-                  year: 'numeric'
+                {new Date(post.timestamp).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
                 })}
               </p>
             </div>
           </div>
-          
+
           <div className="text-xs text-gray-500">
             {new Date(post.timestamp).toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit'
+              hour: "2-digit",
+              minute: "2-digit",
             })}
           </div>
         </div>
-        
+
         {/* Stats */}
         <div className="flex justify-between items-center border-t border-gray-100 pt-3">
           <div className="flex space-x-4">
-            <button 
+            <button
               onClick={handleLike}
               className={`flex items-center text-sm ${
-                isLiked ? 'text-indigo-600' : 'text-gray-500 hover:text-indigo-600'
+                isLiked
+                  ? "text-indigo-600"
+                  : "text-gray-500 hover:text-indigo-600"
               }`}
             >
-              <svg 
-  className={`w-5 h-5 mr-1 ${isLiked ? 'fill-current text-orange-500' : 'fill-gray-400'}`} 
-  viewBox="0 0 24 24"
->
-  <path d="M12 4l8 8h-6v8h-4v-8H4l8-8z"/>
-</svg>
+              <svg
+                className={`w-5 h-5 mr-1 ${
+                  isLiked ? "fill-current text-orange-500" : "fill-gray-400"
+                }`}
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 4l8 8h-6v8h-4v-8H4l8-8z" />
+              </svg>
               {likes}
             </button>
-            
-            <button 
+
+            <button
               onClick={handleDislike}
               className={`flex items-center text-sm ${
-                isDisliked ? 'text-indigo-600' : 'text-gray-500 hover:text-indigo-600'
+                isDisliked
+                  ? "text-indigo-600"
+                  : "text-gray-500 hover:text-indigo-600"
               }`}
             >
-              <svg 
-  className={`w-5 h-5 mr-1 ${isDisliked ? 'fill-current text-blue-500' : 'fill-gray-400'}`} 
-  viewBox="0 0 24 24"
->
-  <path d="M12 20l-8-8h6V4h4v8h6l-8 8z"/>
-</svg>
+              <svg
+                className={`w-5 h-5 mr-1 ${
+                  isDisliked ? "fill-current text-blue-500" : "fill-gray-400"
+                }`}
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 20l-8-8h6V4h4v8h6l-8 8z" />
+              </svg>
               {dislikes}
             </button>
           </div>
-          
+
           <button className="text-gray-500 hover:text-indigo-600">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+              />
             </svg>
           </button>
         </div>

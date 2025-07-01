@@ -45,7 +45,7 @@ const CreatePost = () => {
     formData.append("tags", tags); // comma separated string
 
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const res = await axios.post("http://localhost:5000/api/newpost", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
