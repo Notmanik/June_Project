@@ -1,15 +1,14 @@
 // src/Components/PostCard.jsx
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import getUserProfile from "../Api/getUserProfile";
 import { useEffect } from "react";
+
 const PostCard = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
   const [likes, setLikes] = useState(post.likes || 0);
   const [dislikes, setDislikes] = useState(post.dislikes || 0);
-  const [profilePic, setProfilePic] = useState("");
-  const [username, setUsername] = useState("");
+  const [postUserProfilePic, setPostUserProfilePic] = useState("");
+
   const handleLike = () => {
     if (isLiked) {
       setLikes(likes - 1);
@@ -35,27 +34,21 @@ const PostCard = ({ post }) => {
     }
     setIsDisliked(!isDisliked);
   };
+
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const data = await getUserProfile();
-        if (data?.profilePic?.filename) {
-          setProfilePic(`http://localhost:5000/${data.profilePic.path}`);
-        }
-        setUsername(data.username || ""); // Or use a state like setUsername(data.username)
-      } catch (err) {
-        console.error("Error fetching user profile:", err.message);
-      }
-    };
-    fetchProfile();
-  }, [location.pathname]);
+    // Set the post user's profile picture if available
+    if (post.user?.profilePic?.path) {
+      setPostUserProfilePic(`http://localhost:5000/uploads/profile-image/${post.user.profilePic.filename}`);
+    }
+  }, [post.user]);
+
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1">
       {/* Media section */}
       {post.media && (
         <div className="h-60 overflow-hidden">
           <img
-            src={`http://localhost:5000/uploads/${post.media.filename}`}
+            src={`http://localhost:5000/uploads/post-images/${post.media.filename}`}
             alt="Post media"
             className="w-full h-full object-cover"
           />
@@ -85,15 +78,15 @@ const PostCard = ({ post }) => {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center">
             <div className="w-10 h-10 rounded-full flex items-center justify-center bg-indigo-100 mr-2 shadow-md border-2 border-white transition-transform duration-200 hover:scale-105">
-              {profilePic ? (
+              {postUserProfilePic ? (
                 <img
-                  src={profilePic}
+                  src={postUserProfilePic}
                   alt="Profile"
                   className="w-full h-full rounded-full object-cover"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 text-white font-bold text-lg">
-                  {username?.charAt(0).toUpperCase() || "U"}
+                  {post.user?.username?.charAt(0).toUpperCase() || "U"}
                 </div>
               )}
             </div>

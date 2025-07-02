@@ -21,48 +21,85 @@ const EditProfile = () => {
   const navigate = useNavigate();
 
   // Fetch current profile data
-  useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const token = sessionStorage.getItem("token");
-        const response = await axios.get("/api/user/profile", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setProfileData((prev) => ({
-          ...prev,
-          ...response.data,
-          firstName: response.data.firstName ?? "",
-          lastName: response.data.lastName ?? "",
-          username: response.data.username ?? "",
-          age: response.data.age ?? "",
-          bio: response.data.bio ?? "",
-          email: response.data.email ?? "",
-          mobileNumber: response.data.mobileNumber ?? "",
-          interests: Array.isArray(response.data.interests)
-            ? response.data.interests
-            : [],
-          profilePic: response.data.profilePic || {},
-        }));
-
-        if (
-          response.data.profilePic &&
-          response.data.profilePic !== "default_profile_pic.png"
-        ) {
-          setProfileImagePreview(
-            `http://localhost:5000/uploads/profile-image/${profilePic.filename}`
-          );
-        }
-      } catch (error) {
+// Fixed useEffect with correct API URL
+useEffect(() => {
+  const fetchProfileData = async () => {
+    try {
+      const token = sessionStorage.getItem("token");
+      
+      if (!token) {
         setMessage({
-          text: "Failed to load profile data",
+          text: "No authentication token found. Please log in again.",
           type: "error",
         });
+        return;
       }
-    };
-    fetchProfileData();
-  }, []);
+
+      console.log("Fetching profile data...");
+      
+      // Use the full URL like in your handleSubmit
+      const response = await axios.get("http://localhost:5000/api/user/profile", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log("API Response:", response.data);
+
+      // Check if response has data
+      if (!response.data) {
+        throw new Error("No data received from server");
+      }
+
+      setProfileData((prev) => ({
+        ...prev,
+        firstName: response.data.firstName || "",
+        lastName: response.data.lastName || "",
+        username: response.data.username || "",
+        age: response.data.age || "",
+        bio: response.data.bio || "",
+        email: response.data.email || "",
+        mobileNumber: response.data.mobileNumber || "",
+        interests: Array.isArray(response.data.interests)
+          ? response.data.interests
+          : [],
+        profilePic: response.data.profilePic || {},
+      }));
+
+      // Fix the profilePic preview URL
+      if (
+        response.data.profilePic &&
+        response.data.profilePic.filename &&
+        response.data.profilePic.filename !== "default_profile_pic.png"
+      ) {
+        setProfileImagePreview(
+          `http://localhost:5000/uploads/profile-image/${response.data.profilePic.filename}`
+        );
+      }
+      
+    } catch (error) {
+      console.error("Profile fetch error:", error);
+      
+      let errorMessage = "Failed to load profile data";
+      if (error.response) {
+        errorMessage = error.response.data?.message || errorMessage;
+        console.error("Server error:", error.response.status, error.response.data);
+      } else if (error.request) {
+        errorMessage = "Network error - please check your connection";
+        console.error("Network error:", error.request);
+      } else {
+        console.error("Error:", error.message);
+      }
+      
+      setMessage({
+        text: errorMessage,
+        type: "error",
+      });
+    }
+  };
+  
+  fetchProfileData();
+}, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -299,11 +336,12 @@ const EditProfile = () => {
                   name="username"
                   value={profileData.username}
                   onChange={handleChange}
+                  disabled
                   className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
                     errors.username
                       ? "border-red-500 focus:ring-red-200"
                       : "border-gray-300 focus:border-indigo-500 focus:ring-indigo-200"
-                  }`}
+                  } cursor-not-allowed hover:bg-gray-50 hover:shadow-stone-50`}
                   placeholder="Your username"
                 />
                 {errors.username && (
@@ -325,11 +363,12 @@ const EditProfile = () => {
                   name="email"
                   value={profileData.email}
                   onChange={handleChange}
+                  disabled
                   className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
                     errors.email
                       ? "border-red-500 focus:ring-red-200"
                       : "border-gray-300 focus:border-indigo-500 focus:ring-indigo-200"
-                  }`}
+                  } cursor-not-allowed hover:bg-gray-50 hover:shadow-stone-50`}
                   placeholder="your.email@example.com"
                 />
                 {errors.email && (

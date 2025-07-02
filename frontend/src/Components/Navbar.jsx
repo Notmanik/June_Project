@@ -115,7 +115,7 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path;
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
     setIsDropdownOpen(false);
     window.location.reload();
   };

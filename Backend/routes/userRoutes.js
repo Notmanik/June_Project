@@ -8,6 +8,7 @@ import {
 } from "../controllers/userControllers.js";
 import verifyToken from "../middlewares/jwtVerifyToken.js";
 import { body, validationResult } from "express-validator";
+import deleteOldProfilePic from "../middlewares/deleteOldProfilePic.js";
 
 const router = express.Router();
 // Route to get user profile
@@ -16,6 +17,7 @@ router.get("/profile", verifyToken, getUserProfile);
 router.put(
   "/profile/edit",
   verifyToken, mutler('profilePic','uploads/profile-image/'),
+  deleteOldProfilePic,
   updateUserProfile
 );
 // Route to delete user account

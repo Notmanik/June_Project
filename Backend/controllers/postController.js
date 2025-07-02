@@ -3,7 +3,7 @@ import Post from "../models/post.js";
 import "dotenv/config";
 const getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find().populate("user", "username profilePicture");
+    const posts = await Post.find().populate("user", "username profilePic");
     res.status(200).json({ success: true, posts });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

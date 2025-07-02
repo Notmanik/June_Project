@@ -43,9 +43,14 @@ const CreatePost = () => {
     formData.append("file", file);
     formData.append("description", description);
     formData.append("tags", tags); // comma separated string
-
+    const token = sessionStorage.getItem("token");
+    console.log("Token:", token);
+    if (!token) {
+      alert("You must be logged in to create a post");
+      setIsLoading(false);
+      return;
+    }
     try {
-      const token = sessionStorage.getItem("token");
       const res = await axios.post("http://localhost:5000/api/newpost", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -56,7 +61,8 @@ const CreatePost = () => {
       setIsLoading(false);
       navigate("/home");
     } catch (err) {
-      console.error("Error creating post:", err);
+      console.error("Full error:", err.response?.data || err.message);
+      
       setIsLoading(false);
       alert("Failed to create post");
     }
