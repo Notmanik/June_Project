@@ -3,9 +3,19 @@ import axios from "axios";
 import getPostByUser from "../Api/getPostByUser";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
+import { set } from "mongoose";
+
 const PostCard = ({ post }) => {
   const navigate = useNavigate();
+  
 
+  const getProfilePicUrl = (user) => {
+  if (!user?.profilePic) return null;
+  return typeof user.profilePic === "string"
+    ? `http://localhost:5000/uploads/profile-image/${user.profilePic}`
+    : `http://localhost:5000/uploads/profile-image/${user.profilePic.filename}`;
+};
+  const profilePicUrl = getProfilePicUrl(post.user);
   return (
     <div
       className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1 cursor-pointer"
@@ -44,10 +54,21 @@ const PostCard = ({ post }) => {
         {/* User info and timestamp */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center">
-            <div className="bg-indigo-100 rounded-full w-8 h-8 flex items-center justify-center mr-2">
-              <span className="text-indigo-700 font-medium">
-                {post.user?.username?.charAt(0).toUpperCase() || "U"}
-              </span>
+            {/* Profile Pic */}
+            <div className="w-10 h-10 rounded-full overflow-hidden mr-3"> 
+              {profilePicUrl ? (
+                <img
+                src = {profilePicUrl}
+                  alt={`${post.user?.username || "User"}'s profile`}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-indigo-100 flex items-center justify-center">
+                  <span className="text-indigo-600 text-lg font-bold">
+                    {post.user?.username?.charAt(0) || "U"}
+                  </span>
+                </div>
+              )}
             </div>
             <div>
               <p className="text-sm font-medium text-gray-900">
@@ -83,6 +104,7 @@ const Profile = () => {
   const [postLoading, setPostLoading] = useState(true);
   const [postError, setPostError] = useState(null);
   const [activeTab, setActiveTab] = useState("posts");
+  const [profilePic, setProfilePic] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -100,6 +122,7 @@ const Profile = () => {
         });
 
         setUserData(res.data);
+        setProfilePic(res.data.profilePic);
         setLoading(false);
       } catch (err) {
         let errorMessage = "An error occurred";
@@ -458,8 +481,8 @@ const Profile = () => {
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {posts.map((post) => (
-                        <PostCard key={post._id} post={post} />
+                      {posts.map((post , userData) => (
+                        <PostCard key={post._id} post={post} userData={userData}/>
                       ))}
                     </div>
                   )}

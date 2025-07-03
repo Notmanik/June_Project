@@ -131,8 +131,9 @@ useEffect(() => {
   };
 
   const handleInterestChange = (e) => {
+
     const { value } = e.target;
-    if (e.key === "Enter" && value.trim()) {
+    if (e.key === "Enter" && e.shiftKey && value.trim()) {
       setProfileData({
         ...profileData,
         interests: [...profileData.interests, value.trim()],
@@ -320,7 +321,7 @@ useEffect(() => {
           </div>
 
           {/* Main Form */}
-          <form onSubmit={handleSubmit} className="p-6">
+          <form onSubmit={handleSubmit} className="p-6" >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Username */}
               <div>
@@ -561,7 +562,8 @@ useEffect(() => {
                 Cancel
               </button>
               <button
-                type="submit"
+                type="button"
+                onClick={handleSubmit}
                 className={`px-6 py-2 rounded-lg font-medium text-white transition-colors flex items-center ${
                   isSubmitting
                     ? "bg-indigo-400"

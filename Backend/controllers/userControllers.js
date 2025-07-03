@@ -150,7 +150,7 @@ const deleteUserAccount = async (req, res) => {
 const getPostByUser = async (req , res) => {
   try{
     const userId = req.user.id;
-    const posts = await Post.find({ user: userId }).populate("user", "username profilePicture");
+    const posts = await Post.find({ user: userId }).populate("user");
     if (!posts || posts.length === 0) {
       return res.status(404).json({ success: false, message: "No posts found for this user" });
     }
@@ -159,4 +159,111 @@ const getPostByUser = async (req , res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 }
-export { getUserProfile, updateUserProfile, deleteUserAccount, getPostByUser };
+// GET /search/profile - Search for users via search bar using firstName , Lastname or Username
+const getUserBySearch = async (req,res) => {
+    try{
+        const {searchQuery} = req.query;
+        if(!searchQuery || searchQuery.trim() === '') return res.status(400).json({ success: false , message : "Search Query Can not be empty"});
+        const searchRegex = new RegExp(searchQuery, 'i'); // 'i' for case-insensitive search
+        const users = await User.find({
+            $or: [
+                { firstName: searchRegex },
+                { lastName: searchRegex },
+                { username: searchRegex },
+            ]
+        }).select('-password -mobileNumber -email'); // Exclude sensitive fields
+        if (users.length === 0) {
+            return res.status(404).json({ success: false, message: "No users found" });
+        } else {
+            return res.status(200).json({ success: true, users });
+        }
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ success : false , message : "Server Error"});
+    } 
+}
+const popularUsers = async (req, res) => {
+     async (req,res) => {
+  const mockUsers = [
+        {
+            _id: '1',
+            firstName: 'Alex',
+            lastName: 'Johnson',
+            username: 'alexj',
+            bio: 'Travel enthusiast and photographer. Exploring the world one photo at a time.',
+            interests: ['travel', 'photography', 'nature'],
+            age: 28,
+            profilePic: {
+                filename: 'alex.jpg'
+            }
+        },
+        {
+            _id: '2',
+            firstName: 'Sarah',
+            lastName: 'Williams',
+            username: 'sarahw',
+            bio: 'Food blogger and chef. Creating delicious recipes for everyday cooking.',
+            interests: ['cooking', 'food', 'recipes'],
+            age: 32,
+            profilePic: {
+                filename: 'sarah.jpg'
+            }
+        },
+        {
+            _id: '3',
+            firstName: 'Michael',
+            lastName: 'Chen',
+            username: 'michaelc',
+            bio: 'Software engineer and tech enthusiast. Building the future one line of code at a time.',
+            interests: ['technology', 'coding', 'gaming'],
+            age: 26,
+            profilePic: {
+                filename: 'michael.jpg'
+            }
+        },
+        {
+            _id: '4',
+            firstName: 'Emily',
+            lastName: 'Rodriguez',
+            username: 'emilyr',
+            bio: 'Fitness trainer and nutrition coach. Helping people transform their lives through health.',
+            interests: ['fitness', 'health', 'nutrition'],
+            age: 30,
+            profilePic: {
+                filename: 'emily.jpg'
+            }
+        },
+        {
+            _id: '5',
+            firstName: 'David',
+            lastName: 'Kim',
+            username: 'davidk',
+            bio: 'Musician and composer. Creating melodies that touch the soul.',
+            interests: ['music', 'piano', 'composition'],
+            age: 29,
+            profilePic: {
+                filename: 'david.jpg'
+            }
+        },
+        {
+            _id: '6',
+            firstName: 'Jessica',
+            lastName: 'Taylor',
+            username: 'jessicat',
+            bio: 'Book lover and writer. Lost in stories and creating new worlds.',
+            interests: ['reading', 'writing', 'literature'],
+            age: 27,
+            profilePic: {
+                filename: 'jessica.jpg'
+            }
+        }
+    ];
+  res.status(200).json({
+    success: true,
+    message: "Popular users fetched successfully",
+    data: mockUsers
+  });
+}
+}
+export { getUserProfile, updateUserProfile, deleteUserAccount, getPostByUser , getUserBySearch , popularUsers };

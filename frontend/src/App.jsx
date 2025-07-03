@@ -8,6 +8,8 @@ import CreatePost from "./Pages/CreatePost.jsx";
 import Profile from "./Pages/Profile.jsx";
 import EditProfile from "./Pages/EditProfile.jsx";
 import HelpPage from "./Pages/HelpPage.jsx";
+import  Explore  from "./Pages/Explore.jsx";
+import Temp from "./Pages/Temp.jsx"; 
 function App() {
   return (
     <BrowserRouter>
@@ -18,8 +20,11 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/home/createpost" element={<CreatePost/>} />
         <Route path="/home/profile" element={<Profile />} />
+        <Route path="/home/Explore" element={<Explore />} />
         <Route path="/home/profile/edit" element={<EditProfile />} />
         <Route path="/home/help" element={<HelpPage/>}></Route>
+        <Route path="/temp" element={<Temp/>}></Route>
+        
       </Routes>
     </BrowserRouter>
   )

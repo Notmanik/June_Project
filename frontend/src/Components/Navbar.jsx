@@ -249,6 +249,7 @@ const Navbar = () => {
                     className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-md transition-transform duration-200 hover:scale-105"
                   />
 
+
                 ) : (
                   <div className="bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full w-8 h-8 flex items-center justify-center text-white font-bold">
                     {username?.charAt(0).toUpperCase() || "U"}
@@ -441,9 +442,17 @@ const Navbar = () => {
               <div className="border-t border-indigo-500/50 mt-4 pt-4">
                 <div className="flex items-center px-3 py-2 mb-2">
                   <div className="bg-gradient-to-br from-indigo-200 to-purple-200 rounded-full w-8 h-8 flex items-center justify-center">
-                    <span className="text-indigo-800 font-bold text-sm">
-                      {username?.charAt(0).toUpperCase() || "U"}
-                    </span>
+                    {profilePic ? (
+                        <img
+                          src={profilePic}
+                          alt="Profile"
+                          className="w-8 h-8 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full w-8 h-8 flex items-center justify-center text-white font-bold">
+                          {username?.charAt(0).toUpperCase() || "U"}
+                        </div>
+                      )}
                   </div>
                   <div className="ml-3">
                     <div className="text-white text-sm font-medium">
