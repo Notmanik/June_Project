@@ -76,19 +76,7 @@ june_project/
 
 ## 📸 Screenshots
 
-![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2020.19.21.png)
-![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2020.19.52.png)
-![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2020.19.59.png)
-![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2020.20.07.png)
-![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2020.20.24.png)
-![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.28.07.png)
-![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.28.40.png)
-![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.28.44.png)
-![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.28.56.png)
-![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.29.13.png)
-![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.29.21.png)
-![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.29.41.png)
-![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.29.44.png)
+<div align="center"> <table> <tr> <td><img src="./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2020.19.21.png" width="48%"/></td> <td><img src="./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2020.19.52.png" width="48%"/></td> </tr> <tr> <td><img src="./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2020.19.59.png" width="48%"/></td> <td><img src="./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2020.20.07.png" width="48%"/></td> </tr> <tr> <td><img src="./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2020.20.24.png" width="48%"/></td> <td><img src="./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.28.07.png" width="48%"/></td> </tr> <tr> <td><img src="./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.28.40.png" width="48%"/></td> <td><img src="./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.28.44.png" width="48%"/></td> </tr> <tr> <td><img src="./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.28.56.png" width="48%"/></td> <td><img src="./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.29.13.png" width="48%"/></td> </tr> <tr> <td><img src="./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.29.21.png" width="48%"/></td> <td><img src="./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.29.41.png" width="48%"/></td> </tr> <tr> <td><img src="./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.29.44.png" width="48%"/></td> <td></td> </tr> </table> </div>
 
 ---
 
