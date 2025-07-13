@@ -11,12 +11,13 @@
 - ✅ Post Cards for Viewing Posts
 - ✅ Responsive Homepage
 - ✅ Backend + Frontend Integration
-
+- ✅ Dark Mode for GenZ
+- ✅ Explore Page for finding users
 ---
 
 ## 🔧 Tech Stack
 
-- **Frontend**: React, Tailwind CSS, Axios, React Router DOM
+- **Frontend**: React, Tailwind CSS, Axios, React Router DOM 
 - **Backend**: Node.js, Express.js, MongoDB, Multer
 - **Auth**: JWT-based authentication
 - **Storage**: Local file storage (for now)
@@ -72,20 +73,22 @@ june_project/
 
 ---
 
-## 🌱 Upcoming Features
-
-- 🔐 OTP Verification (Email & Mobile)
-- 🔁 Forgot Password Route
-- 👤 User Routes (Create / Update / Delete User)
-- 🎥 Video Upload Support
-- 🏷️ Filter Posts by Tags
-- 📅 Club Management Features (Events, Members, Roles)
-
----
 
 ## 📸 Screenshots
 
-> _(Add some UI screenshots of your homepage, create post form, and post cards here to make it shine!)_
+![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2020.19.21.png)
+![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2020.19.52.png)
+![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2020.19.59.png)
+![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2020.20.07.png)
+![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2020.20.24.png)
+![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.28.07.png)
+![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.28.40.png)
+![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.28.44.png)
+![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.28.56.png)
+![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.29.13.png)
+![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.29.21.png)
+![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.29.41.png)
+![App Screenshot](./frontend/src/assets/Screen%20Shot%202025-07-13%20at%2021.29.44.png)
 
 ---
 
@@ -103,5 +106,5 @@ This project is open-source and available under the [MIT License](LICENSE).
 
 ## 🙌 Acknowledgements
 
-- UI ideas inspired via DeepSeek & modern design principles
+- UI ideas inspired via modern design principles
 - Built with 💻, ☕, and late-night debugging

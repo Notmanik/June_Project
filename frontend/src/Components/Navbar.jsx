@@ -145,7 +145,7 @@ const Navbar = () => {
                   to={item.path}
                   className={`group relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 flex items-center ${
                     isActive(item.path)
-                      ? "bg-white/20 dark:bg-indigo-800/70 text-white shadow-lg backdrop-blur-sm"
+                      ? "bg-white/20 dark:bg-blue-900/50 text-white shadow-lg backdrop-blur-sm"
                       : "text-indigo-200 dark:text-indigo-300 hover:text-white hover:bg-white/10 dark:hover:bg-indigo-800/50"
                   }`}
                 >
