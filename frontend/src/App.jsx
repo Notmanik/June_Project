@@ -14,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}></Route>
+        <Route path="/auth" element={<Layout />}></Route>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/home" element={<Home />} />
@@ -23,7 +23,7 @@ function App() {
         <Route path="/home/Explore" element={<Explore />} />
         <Route path="/home/profile/edit" element={<EditProfile />} />
         <Route path="/home/help" element={<HelpPage/>}></Route>
-        <Route path="/temp" element={<Temp/>}></Route>
+        <Route path="/" element={<Temp/>}></Route>
         
       </Routes>
     </BrowserRouter>

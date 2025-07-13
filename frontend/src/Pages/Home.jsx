@@ -3,11 +3,9 @@ import { useEffect, useState } from "react";
 import PostCard from "../Components/PostCard";
 import Navbar from "../Components/Navbar";
 import { Link } from "react-router-dom";
-// Simulate API call with mock data
 
 const getAllPosts = async () => {
   try {
-    // In a real app, you would call your actual API
     const response = await fetch("http://localhost:5000/api/posts");
     if (!response.ok) {
       console.error("Request failed with status:", response.status);
@@ -34,50 +32,63 @@ const Home = () => {
       setLoading(false);
     };
     
-    // Simulate loading delay
     setTimeout(() => {
       fetchPosts();
     }, 800);
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100 dark:from-gray-900 dark:to-gray-800">
       <Navbar />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-indigo-800 mb-3">
+          <h1 className="text-3xl md:text-4xl font-bold text-indigo-800 dark:text-indigo-200">
             Welcome to Vistara
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Create, share, and explore. Vistara is your space to post moments, upload media, and stay connected.
           </p>
         </div>
         
         {loading ? (
           <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500 dark:border-indigo-400"></div>
           </div>
         ) : (
           <div>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-semibold text-gray-800">Recent Posts</h2>
-              <div className="bg-white rounded-lg shadow-sm px-3 py-1">
-                <span className="text-sm text-gray-600">
+              <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+                Recent Posts
+              </h2>
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm px-3 py-1">
+                <span className="text-sm text-gray-600 dark:text-gray-400">
                   {posts.length} {posts.length === 1 ? 'post' : 'posts'}
                 </span>
               </div>
             </div>
             
             {posts.length === 0 ? (
-              <div className="bg-white rounded-2xl shadow-md p-8 text-center">
-                <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 mb-4">
-                  <svg className="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-8 text-center">
+                <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 dark:bg-indigo-900/30 mb-4">
+                  <svg 
+                    className="h-8 w-8 text-indigo-600 dark:text-indigo-400" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={2} 
+                      d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
+                    />
                   </svg>
                 </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No posts available</h3>
-                <p className="text-gray-500 mb-4">
+                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-200 mb-2">
+                  No posts available
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400 mb-4">
                   Be the first to share something with the community!
                 </p>
                 <Link 

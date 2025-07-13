@@ -1,6 +1,45 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Moon, Sun } from 'lucide-react';
+const DarkModeToggle = () => {
+  const [darkMode, setDarkMode] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    const savedMode = localStorage.getItem('darkMode');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setDarkMode(savedMode ? savedMode === 'true' : systemPrefersDark);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    document.documentElement.classList.toggle('dark', darkMode);
+    localStorage.setItem('darkMode', darkMode.toString());
+  }, [darkMode, isMounted]);
+
+  if (!isMounted) return <div className="w-5 h-5" />;
+
+  return (
+    <button
+      onClick={() => setDarkMode(!darkMode)}
+      className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300"
+      aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+    >
+      <div className="relative w-5 h-5">
+        <div className={`absolute inset-0 transition-all duration-500 ${darkMode ? 'opacity-0 rotate-180' : 'opacity-100 rotate-0'}`}>
+          <Moon className="w-5 h-5 text-blue-600" />
+        </div>
+        <div className={`absolute inset-0 transition-all duration-500 ${darkMode ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-180'}`}>
+          <Sun className="w-5 h-5 text-yellow-500" />
+        </div>
+      </div>
+    </button>
+  );
+};
+
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
@@ -159,16 +198,16 @@ const SignUp = () => {
     };
 
     return (
-        <div className="min-h-screen flex flex-col bg-gradient-to-br from-indigo-50 to-blue-100">
+        <div className="min-h-screen flex flex-col bg-gradient-to-br from-indigo-50 to-blue-100 dark:from-gray-900 dark:to-gray-800">
             <div className="flex-grow flex items-center justify-center p-4">
-                <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl transition-all hover:shadow-2xl">
+                <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl transition-all hover:shadow-2xl dark:bg-gray-800">
                     <div className="text-center mb-8">
-                        <h1 className="text-3xl font-bold text-indigo-700 mb-2">Create Your Account</h1>
-                        <p className="text-gray-500">Join Vistara today</p>
+                        <h1 className="text-3xl font-bold text-indigo-700 mb-2 dark:text-indigo-500">Create Your Account</h1>
+                        <p className="text-gray-600 dark:text-gray-400">Join Vistara today</p>
                     </div>
 
                     {message && (
-                        <div className={`mb-6 p-4 rounded-xl text-center ${
+                        <div className={`mb-6 p-4 rounded-xl text-center${
                             message.type === 'error' 
                                 ? 'bg-red-100 text-red-700' 
                                 : 'bg-green-100 text-green-700'
@@ -184,7 +223,7 @@ const SignUp = () => {
                                 <input
                                     type="text"
                                     name="username"
-                                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all ${
+                                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all dark:text-gray-200 ${
                                         errors.username 
                                             ? 'border-red-500 focus:ring-red-200' 
                                             : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
@@ -207,7 +246,7 @@ const SignUp = () => {
                                 <input
                                     type="email"
                                     name="email"
-                                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all ${
+                                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all dark:text-gray-100 ${
                                         errors.email 
                                             ? 'border-red-500 focus:ring-red-200' 
                                             : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
@@ -230,7 +269,7 @@ const SignUp = () => {
                                 <input
                                     type="password"
                                     name="password"
-                                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all ${
+                                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none dark:text-gray-100 focus:ring-2 transition-all ${
                                         errors.password 
                                             ? 'border-red-500 focus:ring-red-200' 
                                             : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
@@ -253,7 +292,7 @@ const SignUp = () => {
                                 <input
                                     type="password"
                                     name="confirm_password"
-                                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all ${
+                                    className={`w-full px-4 py-3 border rounded-xl dark:text-gray-100 focus:outline-none focus:ring-2 transition-all ${
                                         errors.confirm_password 
                                             ? 'border-red-500 focus:ring-red-200' 
                                             : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
@@ -276,7 +315,7 @@ const SignUp = () => {
                                 <input
                                     type="text"
                                     name="firstName"
-                                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all ${
+                                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 dark:text-gray-100 transition-all ${
                                         errors.firstName 
                                             ? 'border-red-500 focus:ring-red-200' 
                                             : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
@@ -299,7 +338,7 @@ const SignUp = () => {
                                 <input
                                     type="text"
                                     name="lastName"
-                                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all ${
+                                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 dark:text-gray-100 transition-all ${
                                         errors.lastName 
                                             ? 'border-red-500 focus:ring-red-200' 
                                             : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
@@ -322,7 +361,7 @@ const SignUp = () => {
                                 <input
                                     type="tel"
                                     name="mobileNumber"
-                                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all ${
+                                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 dark:text-gray-100 transition-all ${
                                         errors.mobileNumber 
                                             ? 'border-red-500 focus:ring-red-200' 
                                             : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
@@ -345,7 +384,7 @@ const SignUp = () => {
                                 <input
                                     type="number"
                                     name="age"
-                                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all ${
+                                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 dark:text-gray-100 transition-all ${
                                         errors.age 
                                             ? 'border-red-500 focus:ring-red-200' 
                                             : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
@@ -383,12 +422,22 @@ const SignUp = () => {
                         </div>
                     </form>
 
-                    <div className="mt-8 text-center text-gray-600">
+                    <div className="mt-8 text-center text-gray-600 dark:text-gray-300">
                         <p>
                             Already have an account?{' '}
-                            <Link to="/login" className="text-indigo-600 font-medium hover:text-indigo-800">
+                            <Link to="/login" className="text-indigo-600 font-medium hover:text-indigo-800 dark:hover:text-indigo-400 transition-colors duration-300">
                                 Log in
                             </Link>
+                        </p>
+                        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                            <span>Or switch to </span>
+                            <Link to="/home" className="text-blue-600 font-medium hover:text-blue-800 dark:hover:text-blue-400 transition-colors duration-300">
+                                Home
+                            </Link>
+                            <span> to explore more.</span>
+                        </p>
+                        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                            <DarkModeToggle/>
                         </p>
                     </div>
                 </div>

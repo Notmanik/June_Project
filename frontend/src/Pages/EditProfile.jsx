@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import Navbar from "../Components/Navbar";
 const EditProfile = () => {
   const [profileData, setProfileData] = useState({
     username: "",
@@ -211,7 +211,7 @@ useEffect(() => {
         formData.append("profilePic", profileData.profilePic);
       }
 
-      const response = await axios.put("http://localhost:5000/api/user/profile/edit", formData, {
+      await axios.put("http://localhost:5000/api/user/profile/edit", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -241,11 +241,13 @@ useEffect(() => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100 py-8 px-4 sm:px-6">
+<>
+  <Navbar />
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100 py-8 px-4 sm:px-6 dark:from-slate-950 dark:to-slate-900">
       <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden dark:bg-slate-800">
           {/* Form Header */}
-          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white">
+          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-blue-900 dark:to-purple-800 p-6 text-white">
             <h1 className="text-2xl font-bold">Edit Your Profile</h1>
             <p className="text-indigo-100">Update your personal information</p>
           </div>
@@ -264,10 +266,10 @@ useEffect(() => {
           )}
 
           {/* Profile Picture Upload */}
-          <div className="p-6 border-b border-gray-100">
+          <div className="p-6 border-b border-gray-100 ">
             <div className="flex flex-col items-center">
               <div className="relative mb-4">
-                <div className="w-32 h-32 rounded-full bg-indigo-100 overflow-hidden border-4 border-white shadow-lg">
+                <div className="w-32 h-32 rounded-full bg-indigo-100 overflow-hidden border-4 border-white dark:border-gray-900 shadow-lg">
                   {profileImagePreview ? (
                     <img
                       src={profileImagePreview}
@@ -284,10 +286,10 @@ useEffect(() => {
                 </div>
                 <label
                   htmlFor="profilePic"
-                  className="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 cursor-pointer transition-all"
+                  className="absolute bottom-0 right-0 bg-white dark:bg-slate-500 rounded-full p-2 shadow-md hover:bg-gray-100 dark:hover:bg-gray-400  cursor-pointer transition-all"
                 >
                   <svg
-                    className="w-5 h-5 text-indigo-600"
+                    className="w-5 h-5 text-indigo-600 dark:text-indigo-100 dark:hover:text-indigo-800"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -314,7 +316,7 @@ useEffect(() => {
                   />
                 </label>
               </div>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-200">
                 Click on the icon to change your profile picture
               </p>
             </div>
@@ -322,12 +324,12 @@ useEffect(() => {
 
           {/* Main Form */}
           <form onSubmit={handleSubmit} className="p-6" >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 dark:text-gray-200">
               {/* Username */}
               <div>
                 <label
                   htmlFor="username"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-200"
                 >
                   Username
                 </label>
@@ -342,7 +344,7 @@ useEffect(() => {
                     errors.username
                       ? "border-red-500 focus:ring-red-200"
                       : "border-gray-300 focus:border-indigo-500 focus:ring-indigo-200"
-                  } cursor-not-allowed hover:bg-gray-50 hover:shadow-stone-50`}
+                  } cursor-not-allowed hover:bg-gray-50 hover:shadow-stone-50 dark:hover:bg-gray-600`}
                   placeholder="Your username"
                 />
                 {errors.username && (
@@ -354,7 +356,7 @@ useEffect(() => {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
                 >
                   Email
                 </label>
@@ -369,7 +371,7 @@ useEffect(() => {
                     errors.email
                       ? "border-red-500 focus:ring-red-200"
                       : "border-gray-300 focus:border-indigo-500 focus:ring-indigo-200"
-                  } cursor-not-allowed hover:bg-gray-50 hover:shadow-stone-50`}
+                  } cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-600 hover:shadow-stone-50 `}
                   placeholder="your.email@example.com"
                 />
                 {errors.email && (
@@ -381,7 +383,7 @@ useEffect(() => {
               <div>
                 <label
                   htmlFor="firstName"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
                 >
                   First Name
                 </label>
@@ -409,7 +411,7 @@ useEffect(() => {
               <div>
                 <label
                   htmlFor="lastName"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
                 >
                   Last Name
                 </label>
@@ -435,7 +437,7 @@ useEffect(() => {
               <div>
                 <label
                   htmlFor="age"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
                 >
                   Age
                 </label>
@@ -463,7 +465,7 @@ useEffect(() => {
               <div>
                 <label
                   htmlFor="mobileNumber"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
                 >
                   Mobile Number
                 </label>
@@ -492,7 +494,7 @@ useEffect(() => {
             <div className="mt-6">
               <label
                 htmlFor="bio"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
               >
                 Bio
               </label>
@@ -502,7 +504,7 @@ useEffect(() => {
                 value={profileData.bio}
                 onChange={handleChange}
                 rows="4"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:border-indigo-500 focus:ring-indigo-200"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:border-indigo-500 focus:ring-indigo-200 dark:text-gray-200"
                 placeholder="Tell us something about yourself..."
               />
             </div>
@@ -511,7 +513,7 @@ useEffect(() => {
             <div className="mt-6">
               <label
                 htmlFor="interests"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
               >
                 Interests
               </label>
@@ -533,7 +535,7 @@ useEffect(() => {
                     </span>
                   ))
                 ) : (
-                  <p className="text-gray-500 text-sm">
+                  <p className="text-gray-500 dark:text-gray-200 text-sm">
                     No interests added yet
                   </p>
                 )}
@@ -543,10 +545,10 @@ useEffect(() => {
                 id="interests"
                 name="interests"
                 onKeyDown={handleInterestChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:border-indigo-500 focus:ring-indigo-200"
+                className="w-full px-4 py-2 border border-gray-300 dark:text-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:border-indigo-500 focus:ring-indigo-200"
                 placeholder="Type an interest and press Enter"
               />
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-200">
                 Add your interests one by one
               </p>
             </div>
@@ -556,7 +558,7 @@ useEffect(() => {
               <button
                 type="button"
                 onClick={() => navigate("/home/profile")}
-                className="px-6 py-2 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                className="px-6 py-2 border border-gray-300 rounded-lg font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600/20 dark:hover:text-gray-300 transition-colors"
                 disabled={isSubmitting}
               >
                 Cancel
@@ -604,6 +606,7 @@ useEffect(() => {
         </div>
       </div>
     </div>
+  </>
   );
 };
 

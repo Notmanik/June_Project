@@ -1,6 +1,5 @@
 // src/Components/PostCard.jsx
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const PostCard = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
@@ -36,14 +35,13 @@ const PostCard = ({ post }) => {
   };
 
   useEffect(() => {
-    // Set the post user's profile picture if available
     if (post.user?.profilePic?.path) {
       setPostUserProfilePic(`http://localhost:5000/uploads/profile-image/${post.user.profilePic.filename}`);
     }
   }, [post.user]);
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1">
       {/* Media section */}
       {post.media && (
         <div className="h-60 overflow-hidden">
@@ -58,7 +56,9 @@ const PostCard = ({ post }) => {
       {/* Content section */}
       <div className="p-5">
         {/* Description */}
-        <p className="text-gray-700 mb-4 line-clamp-3">{post.description}</p>
+        <p className="text-gray-700 dark:text-gray-300 mb-4 line-clamp-3">
+          {post.description}
+        </p>
 
         {/* Tags */}
         {post.tags?.length > 0 && (
@@ -66,7 +66,7 @@ const PostCard = ({ post }) => {
             {post.tags.map((tag, index) => (
               <span
                 key={index}
-                className="inline-block bg-indigo-50 text-indigo-700 rounded-full px-3 py-1 text-xs font-medium"
+                className="inline-block bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-full px-3 py-1 text-xs font-medium"
               >
                 #{tag}
               </span>
@@ -77,7 +77,7 @@ const PostCard = ({ post }) => {
         {/* User info and timestamp */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center">
-            <div className="w-10 h-10 rounded-full flex items-center justify-center bg-indigo-100 mr-2 shadow-md border-2 border-white transition-transform duration-200 hover:scale-105">
+            <div className="w-10 h-10 rounded-full flex items-center justify-center bg-indigo-100 dark:bg-gray-700 mr-2 shadow-md border-2 border-white dark:border-gray-700 transition-transform duration-200 hover:scale-105">
               {postUserProfilePic ? (
                 <img
                   src={postUserProfilePic}
@@ -92,10 +92,10 @@ const PostCard = ({ post }) => {
             </div>
 
             <div>
-              <p className="text-sm font-medium text-gray-900">
+              <p className="text-sm font-medium text-gray-900 dark:text-gray-200">
                 {post.user?.username || "Unknown user"}
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-500 dark:text-gray-400">
                 {new Date(post.timestamp).toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
@@ -105,7 +105,7 @@ const PostCard = ({ post }) => {
             </div>
           </div>
 
-          <div className="text-xs text-gray-500">
+          <div className="text-xs text-gray-500 dark:text-gray-400">
             {new Date(post.timestamp).toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
@@ -114,19 +114,21 @@ const PostCard = ({ post }) => {
         </div>
 
         {/* Stats */}
-        <div className="flex justify-between items-center border-t border-gray-100 pt-3">
+        <div className="flex justify-between items-center border-t border-gray-100 dark:border-gray-700 pt-3">
           <div className="flex space-x-4">
             <button
               onClick={handleLike}
               className={`flex items-center text-sm ${
                 isLiked
-                  ? "text-indigo-600"
-                  : "text-gray-500 hover:text-indigo-600"
+                  ? "text-indigo-600 dark:text-indigo-400"
+                  : "text-gray-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400"
               }`}
             >
               <svg
                 className={`w-5 h-5 mr-1 ${
-                  isLiked ? "fill-current text-orange-500" : "fill-gray-400"
+                  isLiked 
+                    ? "fill-current text-orange-500" 
+                    : "fill-gray-400 dark:fill-gray-500"
                 }`}
                 viewBox="0 0 24 24"
               >
@@ -139,13 +141,15 @@ const PostCard = ({ post }) => {
               onClick={handleDislike}
               className={`flex items-center text-sm ${
                 isDisliked
-                  ? "text-indigo-600"
-                  : "text-gray-500 hover:text-indigo-600"
+                  ? "text-indigo-600 dark:text-indigo-400"
+                  : "text-gray-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400"
               }`}
             >
               <svg
                 className={`w-5 h-5 mr-1 ${
-                  isDisliked ? "fill-current text-blue-500" : "fill-gray-400"
+                  isDisliked 
+                    ? "fill-current text-blue-500" 
+                    : "fill-gray-400 dark:fill-gray-500"
                 }`}
                 viewBox="0 0 24 24"
               >
@@ -155,7 +159,7 @@ const PostCard = ({ post }) => {
             </button>
           </div>
 
-          <button className="text-gray-500 hover:text-indigo-600">
+          <button className="text-gray-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400">
             <svg
               className="w-5 h-5"
               fill="none"

@@ -179,25 +179,25 @@ const Explore = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100 dark:from-gray-950 dark:to-gray-800">
       <Navbar />
 
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Hero Section */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-indigo-800 mb-4">
+          <h1 className="text-4xl font-bold text-indigo-800 mb-4 dark:text-indigo-500">
             Discover Amazing People
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto dark:text-gray-300">
             Connect with people who share your interests and passions
           </p>
         </div>
 
         {/* Search Section */}
-        <div className="bg-white rounded-2xl shadow-xl p-6 mb-8">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 mb-8">
           <div
             className={`relative rounded-xl border-2 transition-all ${
-              isFocused ? "border-indigo-500" : "border-gray-200"
+              isFocused ? "border-indigo-500" : "border-gray-500"
             }`}
           >
             <div className="flex">
@@ -209,7 +209,7 @@ const Explore = () => {
                 onKeyPress={handleKeyPress}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                className="w-full px-6 py-4 rounded-l-xl focus:outline-none text-lg"
+                className="w-full px-6 py-4 rounded-l-xl focus:outline-none text-lg dark:text-gray-200"
               />
               <button
                 onClick={handleSearch}
@@ -268,7 +268,7 @@ const Explore = () => {
 
           {/* Real-time search indicator */}
           {searchQuery.length > 0 && searchQuery.length < 2 && (
-            <div className="mt-2 text-sm text-gray-500">
+            <div className="mt-2 text-sm text-gray-500 dark:focus:text-indigo-400">
               Type at least 2 characters to start searching...
             </div>
           )}
@@ -276,13 +276,13 @@ const Explore = () => {
           {/* Recent Searches */}
           {recentSearches.length > 0 && (
             <div className="mt-4">
-              <h3 className="text-gray-700 mb-2">Recent Searches:</h3>
+              <h3 className="text-gray-700 dark:text-gray-200 mb-2">Recent Searches:</h3>
               <div className="flex flex-wrap gap-2">
                 {recentSearches.map((search, index) => (
                   <button
                     key={index}
                     onClick={() => handleRecentSearchClick(search.query)}
-                    className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors"
+                    className="px-3 py-1 bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-200 rounded-full hover:bg-gray-200 dark:hover:bg-slate-500 transition-colors"
                   >
                     {search.query}
                   </button>
@@ -323,7 +323,7 @@ const Explore = () => {
                 className={`px-4 py-2 rounded-full transition-all ${
                   activeFilter === "all"
                     ? "bg-indigo-600 text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-slate-700 dark:hover:bg-slate-500 dark:text-gray-200"
                 }`}
               >
                 Show All
@@ -335,7 +335,7 @@ const Explore = () => {
                   className={`px-4 py-2 rounded-full transition-all ${
                     activeFilter === interest
                       ? "bg-indigo-600 text-white"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-slate-700 dark:hover:bg-slate-500 dark:text-gray-200"
                   }`}
                 >
                   #{interest}
@@ -347,262 +347,215 @@ const Explore = () => {
 
         {/* Results Section */}
         <div className="mb-8">
-          {loading ? (
-            <div className="flex justify-center items-center h-64">
-              <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-indigo-600"></div>
-            </div>
-          ) : error ? (
-            <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
-              <div className="mx-auto w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-4">
-                <svg
-                  className="w-8 h-8 text-red-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+  {loading ? (
+    <div className="flex justify-center items-center h-64">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-indigo-600 dark:border-indigo-400"></div>
+    </div>
+  ) : error ? (
+    <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-xl p-6 text-center">
+      <div className="mx-auto w-16 h-16 rounded-full bg-red-100 dark:bg-red-800/20 flex items-center justify-center mb-4">
+        <svg
+          className="w-8 h-8 text-red-500 dark:text-red-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+          />
+        </svg>
+      </div>
+      <h3 className="text-xl font-medium text-gray-800 dark:text-gray-200 mb-2">
+        Search Error
+      </h3>
+      <p className="text-gray-600 dark:text-gray-300 mb-4">{error}</p>
+      <button
+        className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors"
+        onClick={() => setError(null)}
+      >
+        Try Again
+      </button>
+    </div>
+  ) : filteredResults.length > 0 ? (
+    <div>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
+          {filteredResults.length}{" "}
+          {filteredResults.length === 1 ? "Result" : "Results"} Found
+        </h2>
+        <div className="text-gray-600 dark:text-gray-400">
+          Showing {activeFilter === "all" ? "all" : `#${activeFilter}`}{" "}
+          results{" "}
+          {debouncedSearchQuery && `for "${debouncedSearchQuery}"`}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredResults.map((user) => (
+          <div
+            key={user._id}
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/50 overflow-hidden transition-all hover:shadow-xl dark:hover:shadow-gray-900/70 hover:-translate-y-1 border border-gray-100 dark:border-gray-700"
+          >
+            <div className="p-6">
+              <div className="flex items-center mb-4">
+                {getProfilePicUrl(user) ? (
+                  <img
+                    src={getProfilePicUrl(user)}
+                    className="w-16 h-16 rounded-full object-cover border-2 border-white dark:border-gray-800 shadow-md"
+                    alt={user.username}
                   />
-                </svg>
-              </div>
-              <h3 className="text-xl font-medium text-gray-800 mb-2">
-                Search Error
-              </h3>
-              <p className="text-gray-600 mb-4">{error}</p>
-              <button
-                className="text-indigo-600 hover:text-indigo-800 font-medium"
-                onClick={() => setError(null)}
-              >
-                Try Again
-              </button>
-            </div>
-          ) : filteredResults.length > 0 ? (
-            <div>
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">
-                  {filteredResults.length}{" "}
-                  {filteredResults.length === 1 ? "Result" : "Results"} Found
-                </h2>
-                <div className="text-gray-600">
-                  Showing {activeFilter === "all" ? "all" : `#${activeFilter}`}{" "}
-                  results{" "}
-                  {debouncedSearchQuery && `for "${debouncedSearchQuery}"`}
+                ) : (
+                  <div className="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center border-2 border-white dark:border-gray-800 shadow-md">
+                    <svg
+                      className="w-8 h-8 text-gray-400 dark:text-gray-500"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 14c2.21 0 4-1.79 4-4s-1.79-4-4-4
+         -4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4
+         v2h16v-2c0-2.66-5.33-4-8-4z"
+                      />
+                    </svg>
+                  </div>
+                )}
+
+                <div className="ml-4">
+                  <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100">
+                    {user.firstName} {user.lastName}
+                  </h3>
+                  <p className="text-indigo-600 dark:text-indigo-400">@{user.username}</p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredResults.map((user) => (
-                  <div
-                    key={user._id}
-                    className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1"
-                  >
-                    <div className="p-6">
-                      <div className="flex items-center mb-4">
-                        {getProfilePicUrl(user) ? (
-                          <img
-                            src={getProfilePicUrl(user)}
-                            className="w-16 h-16 rounded-full object-cover border-2 border-white shadow-md"
-                            alt={user.username}
-                          />
-                        ) : (
-                          <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center border-2 border-white shadow-md">
-                            <svg
-                              className="w-8 h-8 text-gray-400"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              strokeWidth={2}
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 14c2.21 0 4-1.79 4-4s-1.79-4-4-4
-         -4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4
-         v2h16v-2c0-2.66-5.33-4-8-4z"
-                              />
-                            </svg>
-                          </div>
-                        )}
-
-                        <div className="ml-4">
-                          <h3 className="font-bold text-lg text-gray-900">
-                            {user.firstName} {user.lastName}
-                          </h3>
-                          <p className="text-indigo-600">@{user.username}</p>
-                        </div>
-                      </div>
-
-                      <div className="mb-4">
-                        <p className="text-gray-600 text-sm line-clamp-2">
-                          {user.bio || "No bio available"}
-                        </p>
-                      </div>
-
-                      {user.interests && user.interests.length > 0 && (
-                        <div className="mb-4">
-                          <div className="flex flex-wrap gap-2">
-                            {user.interests
-                              .slice(0, 3)
-                              .map((interest, index) => (
-                                <span
-                                  key={index}
-                                  className="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium"
-                                >
-                                  #{interest}
-                                </span>
-                              ))}
-                            {user.interests.length > 3 && (
-                              <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs">
-                                +{user.interests.length - 3} more
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      )}
-
-                      <div className="flex justify-between items-center">
-                        {user.age && (
-                          <div className="text-sm text-gray-500">
-                            {user.age} years
-                          </div>
-                        )}
-                        <div className="flex space-x-3">
-                          <button className="p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors">
-                            <svg
-                              className="w-5 h-5 text-gray-600"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                              />
-                            </svg>
-                          </button>
-                          <button className="px-4 py-2 bg-indigo-600 text-white rounded-full text-sm font-medium hover:bg-indigo-700 transition-colors">
-                            Connect
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+              <div className="mb-4">
+                <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2">
+                  {user.bio || "No bio available"}
+                </p>
               </div>
-            </div>
-          ) : searchQuery && searchQuery.length >= 2 ? (
-            <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
-              <div className="mx-auto w-24 h-24 rounded-full bg-indigo-100 flex items-center justify-center mb-6">
-                <svg
-                  className="w-12 h-12 text-indigo-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">
-                No Results Found
-              </h3>
-              <p className="text-gray-600 max-w-md mx-auto mb-6">
-                We couldn't find any users matching "{searchQuery}". Try another
-                search term or browse popular interests.
-              </p>
-              <button
-                className="text-indigo-600 hover:text-indigo-800 font-medium"
-                onClick={() => {
-                  setSearchQuery("");
-                  setActiveFilter("all");
-                }}
-              >
-                Browse All Users
-              </button>
-            </div>
-          ) : (
-            <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
-              <div className="mx-auto w-24 h-24 rounded-full bg-indigo-100 flex items-center justify-center mb-6">
-                <svg
-                  className="w-12 h-12 text-indigo-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">
-                Start Exploring
-              </h3>
-              <p className="text-gray-600 max-w-md mx-auto">
-                Search for people by name, username, or interests to discover
-                new connections.
-              </p>
-            </div>
-          )}
-        </div>
 
-        {/* Popular Users Section */}
-        {popularUsers.length > 0 && !searchQuery && (
-          <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-gray-800">Popular Users</h2>
-              <span className="text-indigo-600 text-sm">
-                Most active community members
-              </span>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {popularUsers.map((user) => (
-                <div
-                  key={user._id}
-                  className="flex items-center p-4 border border-gray-100 rounded-xl hover:bg-indigo-50 transition-colors"
-                >
-                  <img
-                    src={getProfilePicUrl(user)}
-                    alt={user.username}
-                    className="w-14 h-14 rounded-full object-cover border-2 border-white shadow-md"
-                  />
-                  <div className="ml-4">
-                    <h3 className="font-bold text-gray-900">
-                      {user.firstName} {user.lastName}
-                    </h3>
-                    <p className="text-sm text-gray-600">@{user.username}</p>
-                    {user.interests && user.interests.length > 0 && (
-                      <div className="flex mt-2">
-                        {user.interests.slice(0, 2).map((interest, index) => (
-                          <span
-                            key={index}
-                            className="mr-2 bg-indigo-50 text-indigo-700 px-2 py-1 rounded-full text-xs"
-                          >
-                            #{interest}
-                          </span>
-                        ))}
-                      </div>
+              {user.interests && user.interests.length > 0 && (
+                <div className="mb-4">
+                  <div className="flex flex-wrap gap-2">
+                    {user.interests
+                      .slice(0, 3)
+                      .map((interest, index) => (
+                        <span
+                          key={index}
+                          className="bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full text-xs font-medium"
+                        >
+                          #{interest}
+                        </span>
+                      ))}
+                    {user.interests.length > 3 && (
+                      <span className="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-xs">
+                        +{user.interests.length - 3} more
+                      </span>
                     )}
                   </div>
-                  <button className="ml-auto bg-white border border-indigo-600 text-indigo-600 hover:bg-indigo-50 px-3 py-1 rounded-full text-sm transition-colors">
+                </div>
+              )}
+
+              <div className="flex justify-between items-center">
+                {user.age && (
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    {user.age} years
+                  </div>
+                )}
+                <div className="flex space-x-3">
+                  <button className="p-2 bg-gray-100 dark:bg-gray-700 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                    <svg
+                      className="w-5 h-5 text-gray-600 dark:text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                      />
+                    </svg>
+                  </button>
+                  <button className="px-4 py-2 bg-indigo-600 dark:bg-indigo-700 text-white rounded-full text-sm font-medium hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors">
                     Connect
                   </button>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
-        )}
+        ))}
+      </div>
+    </div>
+  ) : searchQuery && searchQuery.length >= 2 ? (
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/50 p-12 text-center border border-gray-100 dark:border-gray-700">
+      <div className="mx-auto w-24 h-24 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center mb-6">
+        <svg
+          className="w-12 h-12 text-indigo-500 dark:text-indigo-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      </div>
+      <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-3">
+        No Results Found
+      </h3>
+      <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto mb-6">
+        We couldn't find any users matching "{searchQuery}". Try another
+        search term or browse popular interests.
+      </p>
+      <button
+        className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors"
+        onClick={() => {
+          setSearchQuery("");
+          setActiveFilter("all");
+        }}
+      >
+        Browse All Users
+      </button>
+    </div>
+  ) : (
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/50 p-12 text-center border border-gray-100 dark:border-gray-700">
+      <div className="mx-auto w-24 h-24 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center mb-6">
+        <svg
+          className="w-12 h-12 text-indigo-500 dark:text-indigo-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
+        </svg>
+      </div>
+      <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-3">
+        Start Exploring
+      </h3>
+      <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+        Search for people by name, username, or interests to discover
+        new connections.
+      </p>
+    </div>
+  )}
+        </div>
       </div>
     </div>
   );
