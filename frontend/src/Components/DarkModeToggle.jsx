@@ -7,32 +7,39 @@ const DarkModeToggle = () => {
 
   useEffect(() => {
     setIsMounted(true);
-    
-    // Get initial theme (using React state instead of localStorage for Claude.ai compatibility)
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    setDarkMode(systemPrefersDark);
+
+    // Check localStorage first, fallback to system preference
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme === 'dark') {
+      setDarkMode(true);
+    } else if (storedTheme === 'light') {
+      setDarkMode(false);
+    } else {
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setDarkMode(systemPrefersDark);
+      localStorage.setItem('theme', systemPrefersDark ? 'dark' : 'light');
+    }
   }, []);
 
   useEffect(() => {
     if (!isMounted) return;
-    
-    // Apply theme to document
+
     if (darkMode) {
       document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
     }
   }, [darkMode, isMounted]);
 
   if (!isMounted) {
-    // Render a placeholder while mounting
     return (
       <div className="relative">
         <div className="w-16 h-8 bg-gradient-to-r from-slate-200 to-slate-300 rounded-full shadow-lg animate-pulse" />
       </div>
     );
   }
-
   return (
     <div className="relative">
       {/* Outer glow effect */}
